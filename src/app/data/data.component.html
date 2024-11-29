@@ -1,1 +1,27 @@
-<p>data works!</p>
+<!-- <p>data works!</p>
+{{datas|json}} -->
+
+<div class="row my-3 fw-bold">
+    <div *ngFor="let oszlop of oszlopok" class="col">{{oszlop.text}}</div>
+    <div class="col">Actions</div>
+</div>
+
+
+<div class="row my-1">
+    <div *ngFor="let oszlop of oszlopok" class="col">
+        <input [type]="oszlop.type" [(ngModel)]="newData[oszlop.key]" class="form-control">
+    </div>
+    <div class="col">
+        <button type="button" (click)="addData()" class="btn btn-primary btn-sm">Add</button>
+    </div>
+</div>
+
+<div *ngFor="let data of datas" class="row my-1">
+    <div *ngFor="let oszlop of oszlopok" class="col">
+        <input [type]="oszlop.type"  [(ngModel)]="data[oszlop.key]" class="form-control">
+    </div>
+    <div class="col">
+        <button type="button" (click)="updateData(data)" class="btn btn-primary btn-sm">Update</button>
+        <button type="button" (click)="deleteData(data)" class="btn btn-secondary btn-sm ms-2">Delete</button>
+    </div>
+</div>
