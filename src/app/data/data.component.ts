@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FirebaseError } from 'firebase/app';
 import { BaseFireService } from '../base-fire.service';
 import { map } from 'rxjs';
+import { BaseRestService } from '../base-rest.service';
 
 @Component({
   selector: 'app-data',
@@ -19,15 +20,24 @@ export class DataComponent {
   ]
   newData:any={}
 
-  constructor(private base:BaseFireService){
-    base.getDatas().snapshotChanges().pipe(
-      map(
-        (changes)=>changes.map(
-          (c)=>({key:c.payload.key, ...c.payload.val()})
-        )
-      )
-    ).subscribe(
-      (res)=>this.datas=res
+  constructor(private base:BaseRestService){
+    // base.getDatas().snapshotChanges().pipe(
+    //   map(
+    //     (changes)=>changes.map(
+    //       (c)=>({key:c.payload.key, ...c.payload.val()})
+    //     )
+    //   )
+    // ).subscribe(
+    //   (res)=>this.datas=res
+    // )
+
+    base.getDatas().subscribe(
+      (res:any)=>{
+        this.datas=[]
+        for (const key in res) {
+          this.datas.push({key:key, ...res[key]})
+        }         
+      }
     )
 
   }
